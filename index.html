@@ -6,10 +6,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Calculadora - Trader</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <script src="app.js"></script>
+  <div class="container-contact">
+    <div class="wrap-contact">
+        <form class="contact-form ">
+            <span class="titulo">Calculadora - Traders</span>
+            <div class="left">
+                <div class="row">
+                    <div class="col-sm-6 form-group"> 
+                        <label for="meta">Sua Meta em R$:</label>
+                        <input id="meta" class="form-control priceformat" type="text" name="meta" placeholder="Informe sua meta"
+                            style="color: green" 
+                            onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">    
+                    </div>
+                    <div class="col-sm-6 form-group col-B">
+                        <label for="metaPts">Meta em Pts:</label>
+                        <input id="metaPts" class="form-control" type="text" name="metaPts" readonly="true" style="color: green">    
+                    </div>
+                </div>
+                <div class="row-B">
+                    <div class="col-sm-6 form-group"> 
+                        <label for="limiteLoss">Limite Loss em R$:</label>
+                        <input id="limiteLoss" class="form-control" type="text" name="limiteLoss" readonly="true" style="color: red">    
+                    </div>
+                    <div class="col-sm-6 form-group col-B"> 
+                        <label for="limiteLossPts">Limite Loss em Pts:</label>
+                        <input id="limiteLossPts" class="form-control" type="text" name="limiteLossPts" readonly="true" style="color: red">    
+                    </div>
+                </div>
+                <hr/>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-6 form-group"> 
+                        <label for="ativo">Ativos</label>
+                        <select id="ativo" class="js-select2 form-control" tabindex="-1" aria-hidden="true">
+                            <option value="0.2">Mini-Índice</option>
+                            <option value="10">Mini-Dólar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row-B">
+                    <div class="col-sm-6 form-group"> 
+                        <label for="meta">Preço Médio:</label>
+                        <input id="precoMedio" class="form-control" type="text" name="precoMedio" readonly="true" style="color: green">    
+                    </div>
+                    <div class="col-sm-6 form-group col-B"> 
+                        <label for="meta">Preço do Stop Loss:</label>
+                        <input id="precoLimitLoss" class="form-control" type="text" name="precoLimitLoss" readonly="true" style="color: red">    
+                    </div>
+                </div>
+                <div class="row" style="width: 100%">
+                    <fieldset style="text-align:  left; border: 1px solid #666666d6; border-radius: 4px;">
+                        <legend>Adicionar Ordem</legend>
+                        <table>
+                            <tr>
+                                <th style="width: 40px">Operação</th>
+                                <th style="width: 40px">Contratos</th>
+                                <th style="width: 60px">Preço</th>
+                                <th style="width: 40px">Pts Gain</th>
+                                <th style="width: 40px">Pts Loss</th>
+                                <th style="width: 80px">Fechamento</th>
+                                <th style="width: 20px"></th>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px">
+                                    <input id="compra" class="input-radio" type="radio" name="operacao" value="compra" checked="true">
+                                    Compra <br/>
+                                    <input id="venda" class="input-radio" type="radio" name="operacao" value="venda">Venda
+                                </td>
+                                <td>
+                                    <select id="qtdContratos" class="js-select2 form-control" tabindex="-1" aria-hidden="true">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input id="precoscalper" class="form-control priceformat" type="text" name="precoscalper" placeholder="Informe o preço"
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                                </td>
+                                <td>
+                                    <input id="ptsGain" class="form-control priceformat" type="text" name="ptsGain" placeholder="Pts ganho"
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                                </td>
+                                <td>
+                                    <input id="ptsLoss" class="form-control priceformat" type="text" name="ptsLoss" placeholder="Pts perda"
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
+                                </td>
+                                <td style="font-size: 12px">
+                                    <input type="radio" name="fechamento" value="juntos" checked="true">Juntos <br/>
+                                    <input type="radio" name="fechamento" value="apelei">Apelei (Escalonado)
+                                </td>
+                                <td>
+                                    <div class="container-contact-form-btn">
+                                        <button class="contact-form-btn" id="adicionar">Adicionar</button>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+                <div class="row" style="width: 100%">
+                    <fieldset style="text-align:  left; border: 1px solid #666666d6; border-radius: 4px;">
+                        <legend>Lista de Ordens</legend>
+                        <table>
+
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
 </body>
 
 </html>
