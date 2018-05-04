@@ -1,11 +1,10 @@
 {
   "name": "calculadora-trader",
   "version": "1.0.0",
-  "description":
-    "Calculadora para auxílio de operações de ativos módulo Day Trader",
+  "description": "Calculadora para auxílio de operações de ativos módulo Day Trader",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "author": "Fabricio Grazziotti <grazziotti.fabricio@gmail.com>",
   "contributors": [
@@ -16,7 +15,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.19.1",
+    "mocha": "^5.1.1",
     "prettier": "^1.12.1"
   }
 }
