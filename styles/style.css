@@ -1,0 +1,26 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: Calibri, sans-serif;
+  font-size: 16px;
+}
+
+.header {
+  background-color: #ccc;
+  padding: 2em;
+}
+
+.logo {
+  font-size: 2em;
+}
+
+.main-fieldset {
+  border: 2px #af3333 solid;
+  border-radius: 10px;
+}
