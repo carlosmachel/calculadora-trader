@@ -34,18 +34,18 @@
         <select name="estrategias" id="estrategias" data-js="estrategias"></select>
         <fieldset>
           <legend>Operação</legend>
-          <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked">
+          <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
           <label for="operacao-compra">Compra</label>
-          <input type="radio" id="operacao-venda" name="operacao" value="venda">
+          <input type="radio" id="operacao-venda" name="operacao" value="venda" data-js="operacao">
           <label for="operacao-venda">Venda</label>
         </fieldset>
         <label for="quantidade-contratos">Quantidade de Contratos</label>
-        <input type="number" value="1">
+        <input type="number" id="quantidade-contratos" value="1" data-js="quantidadeContratos">
         <label for="preco">Preço</label>
-        <input type="number" placeholder="0">
+        <input type="number" placeholder="0" data-js="preco">
         <fieldset>
           <legend>Modo Encerramento</legend>
-          <input type="checkbox" id="encerramento">
+          <input type="checkbox" id="encerramento" data-js="encerramento">
           <label for="encerramento"> Apelei (escalonado)</label>
         </fieldset>
         <button type="submit">+</button>
@@ -89,6 +89,9 @@
     </div>
   </main>
   <footer></footer>
+  <script src="js/formulario.js"></script>
+  <script src="/js/estrategia.js"></script>
+  <script src="/js/ordem.js"></script>
   <script src="/js/app.js"></script>
 </body>
 
