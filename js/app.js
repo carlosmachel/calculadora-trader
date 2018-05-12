@@ -96,9 +96,7 @@
       return $td
     }
 
-    function popularTabelaOrdens () {
-      var ordem = gerarOrdem()
-
+    function popularTabelaOrdens (ordem) {
       var $tr = doc.createElement('tr')
       $tr.setAttribute('data-index', ordem.index)
 
@@ -123,12 +121,12 @@
     }
 
     var $form = doc.querySelector('[data-js="form"]')
+    $form.addEventListener('submit', handleSubmit)
 
-    $form.addEventListener('submit', function (e) {
+    function handleSubmit (e) {
       e.preventDefault()
-
-      popularTabelaOrdens()
-    })
+      popularTabelaOrdens(gerarOrdem())
+    }
 
     var quantidadeDeContratosOperacao = 0
     var precoMedio = 0

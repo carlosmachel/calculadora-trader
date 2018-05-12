@@ -10,18 +10,18 @@
     this.aberta = false
     this.fechada = false
     this.escalonado = escalonado
+  }
 
-    this.calcularPrecoGain = function calcularPrecoGain (pontos) {
-      this.precoGain = this.operacao === 'compra'
-        ? +this.preco + pontos
-        : +this.preco - pontos
-    }
+  Ordem.prototype.calcularPrecoGain = function calcularPrecoGain (pontos) {
+    this.precoGain = this.operacao === 'compra'
+      ? +this.preco + pontos
+      : +this.preco - pontos
+  }
 
-    this.calcularPrecoLoss = function calcularPrecoLoss (pontos) {
-      this.precoLoss = this.operacao === 'compra'
-        ? +this.preco - pontos
-        : +this.preco + pontos
-    }
+  Ordem.prototype.calcularPrecoLoss = function calcularPrecoLoss (pontos) {
+    this.precoLoss = this.operacao === 'compra'
+      ? +this.preco - pontos
+      : +this.preco + pontos
   }
 
   Ordem.calculateId = (function ordem () {
