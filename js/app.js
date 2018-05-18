@@ -27,7 +27,7 @@
       var qtdContratos = doc.querySelector('[data-js="quantidadeContratos"]')
         .value
       var preco = doc.querySelector('[data-js="preco"]').value
-      var estrategia = obterEstrategiaSelecionada()
+      var estrategia = obterEstrategiaSelecionadas()
       var encerramento = doc.querySelector('[data-js="encerramento"]').checked
       var ordem = new Ordem(operacao, qtdContratos, preco, encerramento)
 
