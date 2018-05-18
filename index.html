@@ -9,86 +9,117 @@
 </head>
 
 <body>
-  <header class="header">
-    <h1 class="logo">
-      Calculadora Trader
-    </h1>
-  </header>
-  <main>
-    <form data-js="form">
-      <fieldset class="main-fieldset">
-        <legend>Meta diária</legend>
-        <label for="ativo">Ativo</label>
-        <select name="ativo" id="ativo" data-js="ativos"></select>
-        <label for="meta">Meta Financeira</label>
-        <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta">
-        <span data-js="metaEmPontos">0 pts</span>
-        <label for="limite">Limite Financeiro</label>
-        <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite">
-        <span data-js="limiteEmPontos">0 pts</span>
-      </fieldset>
+  <div class="page">
+    <header class="header">
+      <h1 class="logo">
+        Calculadora Trader
+      </h1>
+    </header>
+    <main>
+      <form data-js="form">
+        <fieldset class="main-fieldset">
+          <legend>Meta diária</legend>
+          <div class="row-input33">
+            <label for="ativo" class="label">Ativo</label>
+            <select name="ativo" id="ativo" data-js="ativos" class="input50"></select>
+          </div>
+          <div class="row-input33">
+            <label for="meta" class="label">Meta Financeira</label>
+            <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta" class="input50" value="200">
+            <span data-js="metaEmPontos">0 pts</span>
+          </div>
+          <div class="row-input33">
+            <label for="limite" class="label">Limite Financeiro</label>
+            <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite" class="input50" value="100">
+            <span data-js="limiteEmPontos">0 pts</span>
+          </div>
+        </fieldset>
 
+        <fieldset class="main-fieldset">
+          <legend>Criar Ordem</legend>
+          <div class="row-input18">
+            <label for="estrategias" class="label">Estratégias</label>
+            <select name="estrategias" id="estrategias" data-js="estrategias" class="input80"></select>
+          </div>
+          <div class="row-input20">
+            <fieldset class="form-fieldset">
+              <legend class="label">Operação</legend>
+              <ol>
+                <ul>
+                  <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
+                  <label for="operacao-compra" class="label-radio">Compra</label>
+                </ul>
+                <ul>
+                  <input type="radio" id="operacao-venda" name="operacao" value="venda" data-js="operacao">
+                  <label for="operacao-venda" class="label-radio">Venda</label>
+                </ul>
+              </ol>
+            </fieldset>
+          </div>
+          <div class="row-input18">
+            <label for="quantidade-contratos" class="label">Quant. de Contratos</label>
+            <input type="number" id="quantidade-contratos" value="1" data-js="quantidadeContratos" class="input50">
+          </div>
+          <div class="row-input18">
+            <label for="preco" class="label">Preço</label>
+            <input type="number" placeholder="0" data-js="preco" class="input80" value="86000">
+          </div>
+          <div class="row-input20">
+            <fieldset class="form-fieldset">
+              <legend class="label">Modo Encerramento</legend>
+              <input type="checkbox" id="encerramento" data-js="encerramento">
+              <label for="encerramento" class="label-radio"> Apelei (escalonado)</label>
+            </fieldset>
+          </div>
+          <div class="row-input">
+            <button type="submit">+</button>
+          </div>
+
+        </fieldset>
+      </form>
       <fieldset class="main-fieldset">
-        <legend>Criar Ordem</legend>
-        <label for="estrategias">Estratégias</label>
-        <select name="estrategias" id="estrategias" data-js="estrategias"></select>
-        <fieldset>
-          <legend>Operação</legend>
-          <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
-          <label for="operacao-compra">Compra</label>
-          <input type="radio" id="operacao-venda" name="operacao" value="venda" data-js="operacao">
-          <label for="operacao-venda">Venda</label>
-        </fieldset>
-        <label for="quantidade-contratos">Quantidade de Contratos</label>
-        <input type="number" id="quantidade-contratos" value="1" data-js="quantidadeContratos">
-        <label for="preco">Preço</label>
-        <input type="number" placeholder="0" data-js="preco">
-        <fieldset>
-          <legend>Modo Encerramento</legend>
-          <input type="checkbox" id="encerramento" data-js="encerramento">
-          <label for="encerramento"> Apelei (escalonado)</label>
-        </fieldset>
-        <button type="submit">+</button>
+        <legend>Ordens</legend>
+        <table class="responstable">
+          <thead>
+            <th>
+              <td>Contratos</td>
+              <td>Preço</td>
+              <td>Preço Gain</td>
+              <td>Preço Loss</td>
+              <td>Abriu</td>
+              <td>Fechou Gain</td>
+              <td>Fechou Loss</td>
+              <td>Cancelar</td>
+            </th>
+          </thead>
+          <tbody data-js="ordens">
+          </tbody>
+        </table>
       </fieldset>
-    </form>
-    <table>
-      <thead>
-        <th>
-          <td>Contratos</td>
-          <td>Preço</td>
-          <td>Gain</td>
-          <td>Loss</td>
-          <td>Abertura</td>
-          <td>Fechamento</td>
-          <td>Cancelar</td>
-        </th>
-      </thead>
-      <tbody data-js="ordens">
-      </tbody>
-    </table>
-    <div class="card">
-      <h2>Resumo</h2>
-      <p>Stop Gain:
-        <span data-js="resumo" data-js-value="stopGain"></span>
-      </p>
-      <p>Preço Médio:
-        <span data-js="resumo" data-js-value="precoMedio"></span>
-      </p>
-      <p>Stop Loss:
-        <span data-js="resumo" data-js-value="stopLoss"></span>
-      </p>
-      <p>Operando :
-        <span data-js="resumo" data-js-value="quantidadeDeContratosAbertos"></span> contratos
-      </p>
-      <p>Finalizados:
-        <span data-js="resumo" data-js-value="quantidadeDeContratosFinalizados"></span>
-      </p>
-      <p>Operação: ponta
-        <span data-js="resumo" data-js-value="operacao"></span>
-      </p>
-    </div>
-  </main>
-  <footer></footer>
+      <div class="card">
+        <h2>Resumo</h2>
+        <p>Stop Gain:
+          <span data-js="resumo" data-js-value="stopGain"></span>
+        </p>
+        <p>Preço Médio:
+          <span data-js="resumo" data-js-value="precoMedio"></span>
+        </p>
+        <p>Stop Loss:
+          <span data-js="resumo" data-js-value="stopLoss"></span>
+        </p>
+        <p>Operando :
+          <span data-js="resumo" data-js-value="quantidadeDeContratosAbertos"></span> contratos
+        </p>
+        <p>Finalizados:
+          <span data-js="resumo" data-js-value="quantidadeDeContratosFinalizados"></span>
+        </p>
+        <p>Operação: ponta
+          <span data-js="resumo" data-js-value="operacao"></span>
+        </p>
+      </div>
+    </main>
+    <footer></footer>
+  </div>
   <script src="js/formulario.js"></script>
   <script src="/js/estrategia.js"></script>
   <script src="/js/ordem.js"></script>

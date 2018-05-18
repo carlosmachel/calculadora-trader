@@ -1,6 +1,11 @@
 ;(function (win, doc) {
   'use strict'
-  function Formulario () {}
+  var self
+  function Formulario () {
+    this.metaEmPontos = 1000
+    this.limiteEmPontos = 500
+    self = this
+  }
 
   function createOption (value, innerHtml) {
     var $option = doc.createElement('option')
@@ -15,7 +20,7 @@
   var $limite = doc.querySelector('[data-js="limite"]')
   $limite.addEventListener('blur', calcularLimite)
 
-  Formulario.popularAtivos = function popularAtivos (ativos) {
+  Formulario.prototype.popularAtivos = function popularAtivos (ativos) {
     var $selectAtivos = doc.querySelector("[data-js='ativos']")
 
     Object.keys(ativos).forEach(function (ativo) {
@@ -23,7 +28,9 @@
     })
   }
 
-  Formulario.popularEstrategias = function popularEstrategias (estrategias) {
+  Formulario.prototype.popularEstrategias = function popularEstrategias (
+    estrategias
+  ) {
     var $selectEstrategias = doc.querySelector("[data-js='estrategias']")
 
     estrategias.forEach(function (estrategia) {
@@ -33,22 +40,30 @@
     })
   }
 
+  function getAtivoSelecionado () {
+    return doc.querySelector('[data-js="ativos"] > option:checked').value
+  }
+
+  Formulario.getAtivoSelecionado = getAtivoSelecionado
+
   function calcularMeta () {
     var metaEmReal = this.value
-    var ativo = doc.querySelector('[data-js="ativos"] > option:checked')
+    var ativo = getAtivoSelecionado()
 
     var metaEmPontos = doc.querySelector('[data-js="metaEmPontos"]')
+    self.metaEmPontos = metaEmReal ? metaEmReal / ativo : 0
 
-    metaEmPontos.innerHTML = `${metaEmReal ? metaEmReal / ativo.value : 0} pts`
+    metaEmPontos.innerHTML = `${self.metaEmPontos} pts`
   }
 
   function calcularLimite () {
     var limiteEmReal = this.value
-    var ativo = doc.querySelector('[data-js="ativos"] > option:checked')
+    var ativo = getAtivoSelecionado()
 
     var limiteEmPontos = doc.querySelector('[data-js="limiteEmPontos"]')
+    self.limiteEmPontos = limiteEmReal ? limiteEmReal / ativo : 0
 
-    limiteEmPontos.innerHTML = `${limiteEmReal ? limiteEmReal / ativo.value : 0} pts`
+    limiteEmPontos.innerHTML = `${self.limiteEmPontos} pts`
   }
 
   win.Formulario = Formulario
