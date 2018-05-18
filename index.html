@@ -25,12 +25,12 @@
           </div>
           <div class="row-input33">
             <label for="meta" class="label">Meta Financeira</label>
-            <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta" class="input50">
+            <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta" class="input50" value="200">
             <span data-js="metaEmPontos">0 pts</span>
           </div>
           <div class="row-input33">
             <label for="limite" class="label">Limite Financeiro</label>
-            <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite" class="input50">
+            <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite" class="input50" value="100">
             <span data-js="limiteEmPontos">0 pts</span>
           </div>
         </fieldset>
@@ -46,7 +46,7 @@
               <legend class="label">Operação</legend>
               <ol>
                 <ul>
-                  <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao"> 
+                  <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
                   <label for="operacao-compra" class="label-radio">Compra</label>
                 </ul>
                 <ul>
@@ -62,7 +62,7 @@
           </div>
           <div class="row-input18">
             <label for="preco" class="label">Preço</label>
-            <input type="number" placeholder="0" data-js="preco" class="input80">
+            <input type="number" placeholder="0" data-js="preco" class="input80" value="86000">
           </div>
           <div class="row-input20">
             <fieldset class="form-fieldset">
@@ -74,27 +74,27 @@
           <div class="row-input">
             <button type="submit">+</button>
           </div>
-          
+
         </fieldset>
       </form>
       <fieldset class="main-fieldset">
         <legend>Ordens</legend>
         <table class="responstable">
-            <thead>
-              <th>
-                <td>Contratos</td>
-                <td>Preço</td>
-                <td>Preço Gain</td>
-                <td>Preço Loss</td>
-                <td>Abriu</td>
-                <td>Fechou Gain</td>
-                <td>Fechou Loss</td>
-                <td>Cancelar</td>
-              </th>
-            </thead>
-            <tbody data-js="ordens">
-            </tbody>
-          </table>
+          <thead>
+            <th>
+              <td>Contratos</td>
+              <td>Preço</td>
+              <td>Preço Gain</td>
+              <td>Preço Loss</td>
+              <td>Abriu</td>
+              <td>Fechou Gain</td>
+              <td>Fechou Loss</td>
+              <td>Cancelar</td>
+            </th>
+          </thead>
+          <tbody data-js="ordens">
+          </tbody>
+        </table>
       </fieldset>
       <div class="card">
         <h2>Resumo</h2>

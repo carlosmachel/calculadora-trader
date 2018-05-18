@@ -7,8 +7,9 @@
     this.preco = preco
     this.precoGain = 0
     this.precoLoss = 0
-    this.aberta = false
-    this.fechada = false
+    this.abriu = false
+    this.fechadoGain = false
+    this.fechadoLoss = false
     this.escalonado = escalonado
   }
 
