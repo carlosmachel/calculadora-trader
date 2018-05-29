@@ -9,116 +9,185 @@
 </head>
 
 <body>
-  <div class="page">
-    <header class="header">
-      <h1 class="logo">
-        Calculadora Trader
-      </h1>
-    </header>
-    <main>
-      <form data-js="form">
-        <fieldset class="main-fieldset">
-          <legend>Meta diária</legend>
-          <div class="row-input33">
-            <label for="ativo" class="label">Ativo</label>
-            <select name="ativo" id="ativo" data-js="ativos" class="input50"></select>
-          </div>
-          <div class="row-input33">
-            <label for="meta" class="label">Meta Financeira</label>
-            <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta" class="input50" value="200">
-            <span data-js="metaEmPontos">0 pts</span>
-          </div>
-          <div class="row-input33">
-            <label for="limite" class="label">Limite Financeiro</label>
-            <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite" class="input50" value="100">
-            <span data-js="limiteEmPontos">0 pts</span>
-          </div>
-        </fieldset>
+  <div class="container">
+    <div class="page">
+      <header class="header">
+        <h1 class="logo">
+          Calculadora Trader
+        </h1>
+      </header>
+      <nav class="nav_tabs">
+        <ul>
+          <li>
+            <input type="radio" name="tabs" class="rd_tabs" id="ordem_radio" checked="checked">
+            <label for="ordem_radio" class="label">Ordens</label>
+            <div class="content">
+              <article>
+                  <main>
+                  <form data-js="form">
+                    <fieldset class="main-fieldset">
+                      <legend>Meta diária</legend>
+                      <div class="row-input33">
+                        <label for="ativo" class="campo">Ativo</label>
+                        <select name="ativo" id="ativo" data-js="ativos" class="input"></select>
+                      </div>
+                      <div class="row-input33">
+                        <label for="meta" class="campo">Meta Financeira</label>
+                        <input id="meta" name="meta" type="number" placeholder="0,00" data-js="meta" class="input" value="200">
+                        <span data-js="metaEmPontos">0 pts</span>
+                      </div>
+                      <div class="row-input33">
+                        <label for="limite" class="campo">Limite Financeiro</label>
+                        <input id="limite" name="limite" type="number" placeholder="0,00" data-js="limite" class="input" value="100">
+                        <span data-js="limiteEmPontos">0 pts</span>
+                      </div>
+                      <div class="card">
+                        <h2>Resumo</h2>
+                        <div class="row-input20">
+                          Stop Gain:
+                          <span data-js="resumo" data-js-value="stopGain"></span>
+                        </div>
+                        <div class="row-input20">
+                          Preço Médio:
+                          <span data-js="resumo" data-js-value="precoMedio"></span>
+                        </div>
+                        <div class="row-input20 label-red">
+                          Stop Loss:
+                          <span data-js="resumo" data-js-value="stopLoss"></span>
+                        </div>
+                        <div class="row-input20">
+                          Operando:
+                          <span data-js="resumo" data-js-value="quantidadeDeContratosAbertos"></span>
+                        </div>
+                        <div class="row-input20">
+                          Operação:
+                          <span data-js="resumo" data-js-value="operacao"></span>
+                        </p>
+                      </div>
+                    </fieldset>
 
-        <fieldset class="main-fieldset">
-          <legend>Criar Ordem</legend>
-          <div class="row-input18">
-            <label for="estrategias" class="label">Estratégias</label>
-            <select name="estrategias" id="estrategias" data-js="estrategias" class="input80"></select>
-          </div>
-          <div class="row-input20">
-            <fieldset class="form-fieldset">
-              <legend class="label">Operação</legend>
-              <ol>
-                <ul>
-                  <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
-                  <label for="operacao-compra" class="label-radio">Compra</label>
-                </ul>
-                <ul>
-                  <input type="radio" id="operacao-venda" name="operacao" value="venda" data-js="operacao">
-                  <label for="operacao-venda" class="label-radio">Venda</label>
-                </ul>
-              </ol>
-            </fieldset>
-          </div>
-          <div class="row-input18">
-            <label for="quantidade-contratos" class="label">Quant. de Contratos</label>
-            <input type="number" id="quantidade-contratos" value="1" data-js="quantidadeContratos" class="input50">
-          </div>
-          <div class="row-input18">
-            <label for="preco" class="label">Preço</label>
-            <input type="number" placeholder="0" data-js="preco" class="input80" value="86000">
-          </div>
-          <div class="row-input20">
-            <fieldset class="form-fieldset">
-              <legend class="label">Modo Encerramento</legend>
-              <input type="checkbox" id="encerramento" data-js="encerramento">
-              <label for="encerramento" class="label-radio"> Apelei (escalonado)</label>
-            </fieldset>
-          </div>
-          <div class="row-input">
-            <button type="submit">+</button>
-          </div>
+                    <fieldset class="main-fieldset">
+                      <legend>Criar Ordem</legend>
+                      <div class="row-input18">
+                        <label for="estrategias" class="campo">Estratégias</label>
+                        <select name="estrategias" id="estrategias" data-js="estrategias" class="input"></select>
+                      </div>
+                      <div class="row-input20">
+                        <fieldset class="form-fieldset">
+                          <legend class="campo">Operação</legend>
+                          <ol>
+                            <ul>
+                              <input type="radio" id="operacao-compra" name="operacao" value="compra" checked="checked" data-js="operacao">
+                              <label for="operacao-compra" class="campo-radio">Compra</label>
+                            </ul>
+                            <ul>
+                              <input type="radio" id="operacao-venda" name="operacao" value="venda" data-js="operacao">
+                              <label for="operacao-venda" class="campo-radio">Venda</label>
+                            </ul>
+                          </ol>
+                        </fieldset>
+                      </div>
+                      <div class="row-input18">
+                        <label for="quantidade-contratos" class="campo">Quant. de Contratos</label>
+                        <input type="number" id="quantidade-contratos" value="1" data-js="quantidadeContratos" class="input">
+                      </div>
+                      <div class="row-input18">
+                        <label for="preco" class="campo">Preço</label>
+                        <input type="number" placeholder="0" data-js="preco" class="input" value="86000">
+                      </div>
+                      <div class="row-input20">
+                        <fieldset class="form-fieldset">
+                          <legend class="campo">Modo Encerramento</legend>
+                          <input type="checkbox" id="encerramento" data-js="encerramento">
+                          <label for="encerramento" class="campo-radio"> Apelei (escalonado)</label>
+                        </fieldset>
+                      </div>
+                      <div class="row-input">
+                        <button type="submit">+</button>
+                      </div>
+                    </fieldset>
+                  </form>
 
-        </fieldset>
-      </form>
-      <fieldset class="main-fieldset">
-        <legend>Ordens</legend>
-        <table class="responstable">
-          <thead>
-            <th>
-              <td>Contratos</td>
-              <td>Preço</td>
-              <td>Preço Gain</td>
-              <td>Preço Loss</td>
-              <td>Abriu</td>
-              <td>Fechou Gain</td>
-              <td>Fechou Loss</td>
-              <td>Cancelar</td>
-            </th>
-          </thead>
-          <tbody data-js="ordens">
-          </tbody>
-        </table>
-      </fieldset>
-      <div class="card">
-        <h2>Resumo</h2>
-        <p>Stop Gain:
-          <span data-js="resumo" data-js-value="stopGain"></span>
-        </p>
-        <p>Preço Médio:
-          <span data-js="resumo" data-js-value="precoMedio"></span>
-        </p>
-        <p>Stop Loss:
-          <span data-js="resumo" data-js-value="stopLoss"></span>
-        </p>
-        <p>Operando :
-          <span data-js="resumo" data-js-value="quantidadeDeContratosAbertos"></span> contratos
-        </p>
-        <p>Finalizados:
-          <span data-js="resumo" data-js-value="quantidadeDeContratosFinalizados"></span>
-        </p>
-        <p>Operação: ponta
-          <span data-js="resumo" data-js-value="operacao"></span>
-        </p>
-      </div>
-    </main>
-    <footer></footer>
+                  <fieldset class="main-fieldset">
+                    <legend>Ordens</legend>
+                    <table class="responstable">
+                      <thead>
+                        <th>
+                          <td>Contratos</td>
+                          <td>Preço</td>
+                          <td>Preço Gain</td>
+                          <td>Preço Loss</td>
+                          <td>Abriu</td>
+                          <td>Fechou Gain</td>
+                          <td>Fechou Loss</td>
+                          <td>Cancelar</td>
+                        </th>
+                      </thead>
+                      <tbody data-js="ordens">
+                      </tbody>
+                    </table>
+                  </fieldset>
+                </main>
+                <footer></footer>
+              </article>
+            </div>
+          </li>
+          <li>
+            <input type="radio" name="tabs" class="rd_tabs" id="estrategia_radio">
+            <label for="estrategia_radio" class="label">Estratégias</label>
+            <div class="content mini">
+              <article>
+                <form data-js="form">
+                  <fieldset class="main-fieldset">
+                    <legend>Estratégias</legend>
+                    <div class="row-input">
+                        <label for="nome" class="campo" contenteditable="false">Nome</label>
+                        <input name="ativo" id="ativo" data-js="ativos" class="input" maxlength="17"></select>
+                      </div>
+                      <div class="row-input">
+                        <label for="QuantidadePontosGain" class="campo">Pontos Gain</label>
+                        <input id="QuantidadePontosGain" name="QuantidadePontosGain" type="number" placeholder="0,00" data-js="QuantidadePontosGain" class="input" value="200">
+                      </div>
+                      <div class="row-input">
+                        <label for="QuantidadePontosLoss" class="campo">Pontos Loss</label>
+                        <input id="QuantidadePontosLoss" name="QuantidadePontosLoss" type="number" placeholder="0,00" data-js="QuantidadePontosLoss" class="input" value="100">
+                      </div>
+                      <div class="row-input">
+                        <button type="submit">+</button>
+                      </div>
+                  </fieldset>
+                </form>
+
+                <fieldset class="main-fieldset">
+                  <legend>Lista</legend>
+                  <table class="responstable">
+                      <thead>
+                        <th>
+                          <td>Nome</td>
+                          <td>Pontos Gain</td>
+                          <td>Pontos Loss</td>
+                          <td>Excluir</td>
+                        </th>
+                      </thead>
+                      <tbody data-js="estrategia">
+                      </tbody>
+                    </table>
+                </fieldset>
+              </article>
+            </div>
+          </li>
+          <!-- <li>
+            <input type="radio" name="tabs" class="rd_tabs" id="log">
+            <label for="log" class="label">Todas as Ordens</label>
+            <div class="content">
+              <article>
+                Teste 3
+              </article>
+            </div>
+          </li> -->
+        </ul>
+      </nav>
+    </div>
   </div>
   <script src="js/formulario.js"></script>
   <script src="/js/estrategia.js"></script>
