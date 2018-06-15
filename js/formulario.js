@@ -28,16 +28,9 @@
     })
   }
 
-  Formulario.prototype.popularEstrategias = function popularEstrategias (
-    estrategias
-  ) {
+  Formulario.prototype.popularEstrategias = function popularEstrategias (estrategia) {
     var $selectEstrategias = doc.querySelector("[data-js='estrategias']")
-
-    estrategias.forEach(function (estrategia) {
-      $selectEstrategias.appendChild(
-        createOption(estrategia.nome, estrategia.nome)
-      )
-    })
+    $selectEstrategias.appendChild(createOption(estrategia.nome, estrategia.nome))
   }
 
   function getAtivoSelecionado () {

@@ -7,39 +7,53 @@
 body,
 html {
   height: 100%;
-  font-family: Calibri, sans-serif;
-  font-size: 16px;
-  background-color: #ffffffd1;
+  font-family: Calibri, sans-serif;    
+}
+
+.main {
+   position:relative;
 }
 
 .page {
-  position: relative;
-  width: 990px;
+  margin: 0.3% 0.3% 0.3%;  
+  width: 99%;
+  z-index: 2;
 }
 
 .header {
-  background-color: #ffffffd2;
-  padding: 2em;
+  padding: 0.5em;
+  text-align: center;
 }
 
 .logo {
-  font-size: 2em;
+  font-size: 3em;
+  color: #fff;  
 }
 
 .main-fieldset {
-  border: 2px #af3333 solid;
-  border-radius: 10px;
-  padding: 1.1em;
+  background-color: rgb(243, 243, 243, 0.52);
+  border: 0.1em gray solid;
+  border-radius: 0.5em;
+  padding: 1em;
 }
 
-.container{
-  width: 100%;
+.container {  
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2em;
-  position: relative;
+  justify-content: space-between;  
+  padding: 2em;    
+  background: url('../img/grafico.jpg') no-repeat;
+  background-size: cover;  
+  width: 100vw;
+  height: 100vh;  
+}
+
+.cover {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background:#ccc;
+  opacity: 0.3;  
 }
 
 .clear {
@@ -65,7 +79,7 @@ html {
 }
 
 .form-fieldset{
-  border: 1px solid #ccc;
+  border: 1px solid gray;
   border-radius: 4px;
   margin: 0em 0em 0em 0em;
   padding: 0.2em;
@@ -77,13 +91,21 @@ label {
   position: relative;
 }
 
-.label{
+.campo{
   font-weight: 700;
   float: left;
   margin-top: -1.5em;
 }
 
-.label-radio {
+.campo-green {
+  text-decoration-color: green;
+}
+
+.campo-red {
+  text-decoration-color: red;
+}
+
+.campo-radio {
   float: right;
   width: 85%;
 }
@@ -99,21 +121,64 @@ input, select {
   text-align: center;
 }
 
-.input50{
-  width: 50%;
+.input{
+  width: 8em;
 }
-.input80 {
+
+.ol{
   width: 80%;
 }
 
-.input100 {
-  width: 100%
+.ul {
+  width: 100%;
 }
 
-button {
-  margin: 5px 5px 5px;
-  padding: 5px;
-  width: 22px;
+.resumo__stop-gain {
+  color: green;  
+  font-weight: bold;  
+}
+
+.resumo__preco-medio {
+  font-weight: bold;
+}
+
+.resumo__stop-loss{
+  color: red;  
+  font-weight: bold;
+}
+
+.resumo__operacao--venda {
+  font-weight: bold;
+  color: red;
+}
+
+.resumo__operacao--compra {
+  font-weight: bold;
+  color: green;
+}
+
+.button-icon {
+  background: transparent;
+  border: none;
+}
+
+.button-icon--add {
+  font-size: 2rem;
+  color: green;
+}
+
+.button-icon--add:hover {
+  cursor: pointer;      
+}
+
+.button-icon--remove {
+  font-size: 1.5rem;
+  color: #777;
+}
+
+.button-icon--remove:hover {
+  color: red;
+  cursor: pointer;
 }
 
 /* Tabela */
@@ -123,15 +188,18 @@ button {
   overflow: hidden; 
   background: white;
   color: black;
-  border: 1px solid #ccc;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px; 
+  border: 1px solid gray;
+  border-radius: 4px;
   text-align: center;
   text-transform: capitalize;
 }
 
 tr {
-  border: 1px solid rgba(204, 204, 204, 0.96);
+  border: 1px solid rgba(204, 204, 204, 0.96);  
+}
+
+td {
+  padding: 1rem;
 }
 
 th {
@@ -140,4 +208,76 @@ th {
   color: white;
   font-size: 1.5em;
   padding: 1em;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: rgba(204, 204, 204, 0.96);
+}
+
+/* Nav */
+.nav_tabs {
+  border-radius: 10px;
+  height: 500px;
+  margin: 5px auto;
+  position: relative;
+  width: 99%;
+  display: block;
+}
+
+.nav_tabs ul {
+  list-style: none;
+}
+
+.nav_tabs ul li {
+  background-color: #777;
+  border: 1px gray solid;
+  border-bottom: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  float: left;
+}
+
+.nav_tabs .label {
+  display: block;
+  color: black;
+  cursor: pointer;
+  padding: 0.5em;
+  text-align: center;
+  width: 130px;
+}
+
+.rd_tabs:checked ~ label {
+  background-color: #ccc;
+  border-bottom: 1px gray solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.rd_tabs {
+  display: none;
+}
+
+.content {
+  border-top: 2em solid darken(#398B93, 30%);
+  background-color: white;
+  display: none;
+  position: absolute;  
+  width: 100%;
+  left: 0;  
+}
+
+.mini {
+  width: 75%;
+}
+
+.content article {
+  padding: 1em;    
+}
+
+.rd_tabs:checked ~ .content {
+  border: 1px gray solid;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: block;
 }
