@@ -6,54 +6,52 @@
     var ordens = []
     var ordensFinalizadas = []
     var ordensLog = []
-    var estrategias = [new Estrategia('150x100', 150, 100)]
+    var estrategias = []
     var operacao
     var operacoes = { semOperacao: -1, compra: 1, venda: 0 }
     var fluxo = ['abertura', 'fechamento', 'cancelamento']
     var ativos = { miniIndice: 0.2, miniDolar: 10 }
 
     var $tableBody = doc.querySelector('[data-js="ordens"]')
+    var $tableBodyEstrategia = doc.querySelector('[data-js="estrategia"]')
 
     function obterEstrategiaSelecionadas () {
-      var nomeEstrategia = doc.querySelector(
-        '[data-js="estrategias"]>option:checked'
-      ).value
+      var nomeEstrategia = doc.querySelector('[data-js="estrategias"]>option:checked').value
 
       return estrategias.filter(function (item) {
         return item.nome === nomeEstrategia
       })[0]
     }
 
-    function gerarEstrategia() {
-      var nome = doc.querySelector('data-js="nome"]').value
+    function gerarEstrategia () {
+      var nome = doc.querySelector('[data-js="nomeEstrategia"]').value
       var quantidadesPontosGain = doc.querySelector('[data-js="quantidadePontosGain"]').value
       var quantidadesPontosLoss = doc.querySelector('[data-js="quantidadePontosLoss"]').value
 
       var estrategia = new Estrategia(nome, quantidadesPontosGain, quantidadesPontosLoss)
       estrategias.push(estrategia)
       popularTabelaEstrategias(estrategia)
+      formulario.popularEstrategias(estrategia)
     }
 
     function gerarOrdem () {
       var operacao = doc.querySelector('[data-js="operacao"]:checked').value
-      var qtdContratos = Number(
-        doc.querySelector('[data-js="quantidadeContratos"]').value
-      )
+      var qtdContratos = Number(doc.querySelector('[data-js="quantidadeContratos"]').value)
       var preco = Number(doc.querySelector('[data-js="preco"]').value)
       var estrategia = obterEstrategiaSelecionadas()
       var encerramento = doc.querySelector('[data-js="encerramento"]').checked
       if (encerramento) {
         for (var i = 0; i < qtdContratos; i++) {
           var ordem = new Ordem(operacao, 1, preco, encerramento)
-          ordem.calcularPrecoGain(estrategia.pontosGain * (i + 1))
-          ordem.calcularPrecoLoss(estrategia.pontosLoss)
+          ordem.calcularPrecoGain(+estrategia.pontosGain * (i + 1))
+          ordem.calcularPrecoLoss(+estrategia.pontosLoss)
           popularTabelaOrdens(ordem)
           ordens.push(ordem)
         }
       } else {
         var ordem = new Ordem(operacao, qtdContratos, preco, encerramento)
-        ordem.calcularPrecoGain(estrategia.pontosGain)
-        ordem.calcularPrecoLoss(estrategia.pontosLoss)
+        ordem.calcularPrecoGain(+estrategia.pontosGain)
+        ordem.calcularPrecoLoss(+estrategia.pontosLoss)
         popularTabelaOrdens(ordem)
         ordens.push(ordem)
       }
@@ -82,6 +80,12 @@
       return $input
     }
 
+    function createButton (children) {
+      var $button = doc.createElement('button')
+      $button.appendChild(children)
+      return $button
+    }
+
     function createInputText (id, value, handler) {
       var $td = doc.createElement('td')
       var $input = createInput('number', value)
@@ -104,14 +108,16 @@
       $td.appendChild($checkBox)
       return $td
     }
-    
 
-    function createCancelButton (id) {
+    function createCancelButton (id, handleCancel) {
       var $td = doc.createElement('td')
-      var $button = createInput('button', 'X')
+      var $i = doc.createElement('i')
+      $i.classList.add('fas', 'fa-trash')
+      var $button = createButton($i)
       $button.setAttribute('data-index', id)
       $button.setAttribute('data-js', id)
-      $button.addEventListener('click', handleCancelOrder)
+      $button.classList.add('button-icon', 'button-icon--remove')
+      $button.addEventListener('click', handleCancel)
       $td.appendChild($button)
       return $td
     }
@@ -122,15 +128,32 @@
       })[0]
     }
 
-    function removeOrderTable(ordem) {
+    function getEstrategia (id) {
+      return estrategias.filter(function (estrategia) {
+        return estrategia.index === Number(id)
+      })[0]
+    }
+
+    function removeOrderTable (ordem) {
       var $tr = doc.querySelector(`tr[data-index="${ordem.index}"]`)
       $tableBody.removeChild($tr)
+    }
+
+    function removeEstrategiaTable (estrategia) {
+      var $tr = doc.querySelector(`tr[data-index="${estrategia.nome}"]`)
+      $tableBodyEstrategia.removeChild($tr)
     }
 
     function handleCancelOrder (e) {
       var ordem = getOrder(e.target.dataset.index)
       removeOrder(ordem)
       removeOrderTable(ordem)
+    }
+
+    function handleCancelEstrategia (e) {
+      var estrategia = getEstrategia(e.target.dataset.index)
+      removeEstrategia(estrategia)
+      removeEstrategiaTable(estrategia)
     }
 
     function handleClickOrderOpen (e) {
@@ -140,9 +163,7 @@
         if (item.preco === ordem.preco) {
           item.abriu = !item.abriu
 
-          var $checkbox = doc.querySelector(
-            `[data-index="${item.index}"]>td>[data-js="abriu"]`
-          )
+          var $checkbox = doc.querySelector(`[data-index="${item.index}"]>td>[data-js="abriu"]`)
           $checkbox.setAttribute('disabled', 'disabled')
           $checkbox.checked = 'checked'
 
@@ -162,8 +183,8 @@
     function handleClickOrderGainClose (e) {
       var ordem = getOrder(e.target.parentElement.parentElement.dataset.index)
 
-      ordens.forEach(function(item) {
-        if(item.preco === ordem.preco) {
+      ordens.forEach(function (item) {
+        if (item.preco === ordem.preco) {
           var $checkbox = doc.querySelector(`[data-index="${item.index}"]>td>[data-js="gain"]`)
           $checkbox.setAttribute('disabled', 'disabled')
           $checkbox.checked = 'checked'
@@ -176,8 +197,8 @@
     function handleClickOrderLossClose (e) {
       var ordem = getOrder(e.target.parentElement.parentElement.dataset.index)
 
-      ordens.forEach(function(item) {
-        if(item.preco === ordem.preco) {
+      ordens.forEach(function (item) {
+        if (item.preco === ordem.preco) {
           var $checkbox = doc.querySelector(`[data-index="${item.index}"]>td>[data-js="loss"]`)
           $checkbox.setAttribute('disabled', 'disabled')
           $checkbox.checked = 'checked'
@@ -186,7 +207,7 @@
       })
       contabilizarOrdens(Formulario.getAtivoSelecionado(), ordem, 'fechamento')
     }
-    
+
     function createTableData (innerHtml) {
       var $td = doc.createElement('td')
       $td.innerHTML = innerHtml
@@ -195,6 +216,7 @@
 
     function popularTabelaOrdens (ordem) {
       var $tr = doc.createElement('tr')
+      $tr.appendChild(createTableData(''))
       $tr.setAttribute('data-index', ordem.index)
 
       $tr.appendChild(createTableData(ordem.quantidadeDeContratos))
@@ -208,26 +230,35 @@
       $tr.appendChild(createCheckBox(ordem.fechadoGain, handleClickOrderGainClose, 'click', 'gain', true))
       $tr.appendChild(createCheckBox(ordem.fechadoLoss, handleClickOrderLossClose, 'click', 'loss', true))
 
-      $tr.appendChild(createCancelButton(ordem.index))
+      $tr.appendChild(createCancelButton(ordem.index, handleCancelOrder))
       $tableBody.appendChild($tr)
     }
 
     function popularTabelaEstrategias (estrategia) {
       var $tr = doc.createElement('tr')
-      $tr.setAttribute('data-index', estrategia.index)
+      $tr.setAttribute('data-index', estrategia.id)
+      $tr.appendChild(createTableData(''))
       $tr.appendChild(createTableData(estrategia.nome))
       $tr.appendChild(createTableData(estrategia.pontosGain))
       $tr.appendChild(createTableData(estrategia.pontosLoss))
-      $tr.appendChild(createCancelButton(estrategia.index))
-      $tableBody.appendChild($tr)
+      $tr.appendChild(createCancelButton(estrategia.index, handleCancelEstrategia))
+      $tableBodyEstrategia.appendChild($tr)
     }
 
-    var $form = doc.querySelector('[data-js="form"]')
-    $form.addEventListener('submit', handleSubmit)
+    var $formOperacao = doc.querySelector('[data-js="form-operacao"]')
+    $formOperacao.addEventListener('submit', handleSubmitOperacao)
 
-    function handleSubmit (e) {
+    var $formEstrategia = doc.querySelector('[data-js="form-estrategia"]')
+    $formEstrategia.addEventListener('submit', handleSubmitEstrategia)
+
+    function handleSubmitOperacao (e) {
       e.preventDefault()
       gerarOrdem()
+    }
+
+    function handleSubmitEstrategia (e) {
+      e.preventDefault()
+      gerarEstrategia()
     }
 
     function contabilizarOrdens (ativo, ordem, fluxo) {
@@ -253,16 +284,14 @@
           ? precoMedio + formulario.metaEmPontos / quantidadeDeContratosOperacao
           : 0
         precoLoss = quantidadeDeContratosOperacao
-          ? precoMedio -
-              formulario.limiteEmPontos / quantidadeDeContratosOperacao
+          ? precoMedio - formulario.limiteEmPontos / quantidadeDeContratosOperacao
           : 0
       } else {
         precoGain = quantidadeDeContratosOperacao
           ? precoMedio - formulario.metaEmPontos / quantidadeDeContratosOperacao
           : 0
         precoLoss = quantidadeDeContratosOperacao
-          ? precoMedio +
-              formulario.limiteEmPontos / quantidadeDeContratosOperacao
+          ? precoMedio + formulario.limiteEmPontos / quantidadeDeContratosOperacao
           : 0
       }
 
@@ -272,26 +301,33 @@
       atualizarResumo(operacao, precoMedio, precoGain, precoLoss, ordem)
     }
 
-    function atualizarResumo (
-      operacao,
-      precoMedio,
-      precoGain,
-      precoLoss,
-      ordem
-    ) {
+    function atualizarResumo (operacao, precoMedio, precoGain, precoLoss, ordem) {
       var $stopGain = doc.querySelector('[data-js-value="stopGain"]')
       $stopGain.textContent = Math.round(Number(precoGain))
       var $stopLoss = doc.querySelector('[data-js-value="stopLoss"]')
       $stopLoss.textContent = Math.round(Number(precoLoss))
       var $precoMedio = doc.querySelector('[data-js-value="precoMedio"]')
       $precoMedio.textContent = Math.round(Number(precoMedio))
-      var $quantidadeDeContratosAbertos = doc.querySelector(
-        '[data-js-value="quantidadeDeContratosAbertos"]'
-      )
-      $quantidadeDeContratosAbertos.textContent = quantidadeDeContratosOperacao ? quantidadeDeContratosOperacao + ' contratos' : quantidadeDeContratosOperacao
+      var $quantidadeDeContratosAbertos = doc.querySelector('[data-js-value="quantidadeDeContratosAbertos"]')
+      $quantidadeDeContratosAbertos.textContent = quantidadeDeContratosOperacao
+        ? quantidadeDeContratosOperacao
+        : quantidadeDeContratosOperacao
 
       var $operacao = doc.querySelector('[data-js-value="operacao"]')
-      $operacao.textContent = (operacao === 'compra') ? 'ponta compradoura' : (operacao === 'venda') ? 'ponta vendedora' : 'sem operação'
+      $operacao.textContent = operacao === 'compra'
+        ? 'ponta compradora'
+        : operacao === 'venda' ? 'ponta vendedora' : 'sem operação'
+      highlightResumoOperacao(operacao, $operacao)
+    }
+
+    function highlightResumoOperacao (operacao, $operacao) {
+      const operacoes = {
+        compra: 'resumo__operacao--compra',
+        venda: 'resumo__operacao--venda'
+      }
+
+      $operacao.classList = ''
+      $operacao.classList.add(operacoes[operacao])
     }
 
     function atualizarPrecoOrdens (preco) {
@@ -306,19 +342,22 @@
       })
     }
 
+    function removeEstrategia(estrategia) {
+      estrategias = estrategias.filter(function (item) {
+        return item.nome !== estrategia.nome
+      })
+    }
+
     function contabilizarAbertura (ordem) {
       var precoLoss = 0
       var precoGain = 0
       var valorStopGain = 0
 
-      var quantidadeDeContratosAbertura = calcularQuantidadeDeContratosAbertura(
-        ordem
-      )
+      var quantidadeDeContratosAbertura = calcularQuantidadeDeContratosAbertura(ordem)
 
-      if(ordem.operacao === operacao) {
+      if (ordem.operacao === operacao) {
         precoMedio =
-          (precoMedio * quantidadeDeContratosOperacao +
-            ordem.preco * quantidadeDeContratosAbertura) /
+          (precoMedio * quantidadeDeContratosOperacao + ordem.preco * quantidadeDeContratosAbertura) /
           (quantidadeDeContratosOperacao + quantidadeDeContratosAbertura)
 
         quantidadeDeContratosOperacao += quantidadeDeContratosAbertura
@@ -331,11 +370,7 @@
 
       if (ordem.escalonado) {
         ordens = ordens.map(function (item) {
-          if (
-            item.preco === ordem.preco &&
-            !item.abriu &&
-            item.operacao === ordem.operacao
-          ) {
+          if (item.preco === ordem.preco && !item.abriu && item.operacao === ordem.operacao) {
             item.abriu = true
           }
           return item
@@ -345,48 +380,49 @@
     }
 
     function contabilizarFechamento (ordem) {
-      var quantidadeEmPontos = ordem.fechadoGain ? ordem.precoGain - precoMedio : ordem.precoLoss - precoMedio;
+      var quantidadeEmPontos = ordem.fechadoGain ? ordem.precoGain - precoMedio : ordem.precoLoss - precoMedio
       var quantidadeContratosFechamento = calcularQuantidadeContratosFechamento(ordem)
       quantidadeEmPontos = quantidadeEmPontos * quantidadeContratosFechamento
       quantidadeDeContratosOperacao -= quantidadeContratosFechamento
-      precoMedio += (quantidadeEmPontos/quantidadeDeContratosOperacao) * -1
-      
+      precoMedio += quantidadeEmPontos / quantidadeDeContratosOperacao * -1
+
       var excluir = false
-      ordens.forEach(function(item) {
-        excluir = (ordem.fechadoGain && item.precoGain === ordem.precoGain) || (ordem.fechadoLoss && item.precoLoss === ordem.precoLoss)
-        if(excluir) {
+      ordens.forEach(function (item) {
+        excluir =
+          (ordem.fechadoGain && item.precoGain === ordem.precoGain) ||
+          (ordem.fechadoLoss && item.precoLoss === ordem.precoLoss)
+        if (excluir) {
           removeOrder(item)
           removeOrderTable(item)
           ordensFinalizadas.push(item)
           ordensLog.push(item)
         }
       })
-      
+
       atualizarPrecoOrdens(precoMedio)
     }
 
-    function operacaoGain(preco) {
-      return ((operacao === 'compra' && preco >= precoMedio) || (operacao === 'venda' && preco <= precoMedio))
+    function operacaoGain (preco) {
+      return (operacao === 'compra' && preco >= precoMedio) || (operacao === 'venda' && preco <= precoMedio)
     }
 
     function contabilizarViradaDeMao (ordem) {
-      ordens = ordens
-        .map(function (item) {
-          if (item.operacao === operacao && item.abriu) {
-            item.preco = precoMedio
-            if(operacaoGain(ordem.preco)) {
-              item.precoGain = ordem.preco
-              item.fechadoGain = true
-            } else {
-              item.precoLoss = ordem.preco
-              item.fechadoLoss = true
-            }
+      ordens = ordens.map(function (item) {
+        if (item.operacao === operacao && item.abriu) {
+          item.preco = precoMedio
+          if (operacaoGain(ordem.preco)) {
+            item.precoGain = ordem.preco
+            item.fechadoGain = true
+          } else {
+            item.precoLoss = ordem.preco
+            item.fechadoLoss = true
           }
-          return item
-        })
+        }
+        return item
+      })
 
-      ordens.forEach(function(item) {
-        if(item.fechadoGain || item.fechadoLoss) {
+      ordens.forEach(function (item) {
+        if (item.fechadoGain || item.fechadoLoss) {
           removeOrderTable(item)
           ordensFinalizadas.push(item)
           ordensLog.push(item)
@@ -401,32 +437,39 @@
 
     function calcularQuantidadeDeContratosAbertura (ordem) {
       return ordem.escalonado
-        ? ordens.filter(function (item) {
-              return item.escalonado === ordem.escalonado && item.operacao === ordem.operacao && item.preco === ordem.preco
+        ? ordens
+            .filter(function (item) {
+              return (
+                item.escalonado === ordem.escalonado && item.operacao === ordem.operacao && item.preco === ordem.preco
+              )
             })
             .reduce(function (acumulated, currentOrdem) {
               return acumulated + currentOrdem.quantidadeDeContratos
             }, 0)
-        : ordens.filter(function (item) {
-          return item.preco === ordem.preco && item.operacao === ordem.operacao
-        }).reduce(function (acumulated, currentOrdem) {
+        : ordens
+            .filter(function (item) {
+              return item.preco === ordem.preco && item.operacao === ordem.operacao
+            })
+            .reduce(function (acumulated, currentOrdem) {
+              return acumulated + currentOrdem.quantidadeDeContratos
+            }, 0)
+    }
+
+    function calcularQuantidadeContratosFechamento (ordem) {
+      return ordens
+        .filter(function (item) {
+          return (
+            item.operacao == ordem.operacao &&
+            ((ordem.fechadoGain && item.precoGain === ordem.precoGain) ||
+              (ordem.fechadoLoss && item.precoLoss === ordem.precoLoss))
+          )
+        })
+        .reduce(function (acumulated, currentOrdem) {
           return acumulated + currentOrdem.quantidadeDeContratos
         }, 0)
     }
 
-    function calcularQuantidadeContratosFechamento(ordem) {
-      return ordens.filter(function (item) {
-        return item.operacao == ordem.operacao && 
-                ((ordem.fechadoGain && item.precoGain === ordem.precoGain) ||
-                  (ordem.fechadoLoss && item.precoLoss === ordem.precoLoss))
-      }).reduce(function(acumulated, currentOrdem) {
-        return acumulated + currentOrdem.quantidadeDeContratos
-      }, 0)
-    }
-
     var formulario = new Formulario()
-
-    formulario.popularEstrategias(estrategias)
     formulario.popularAtivos(ativos)
   }
 
